@@ -1,0 +1,51 @@
+README
+
+WHAT IS PULQUE?
+
+Pulque is a collection of classes and scripts written in Ruby and Shell 
+scripting to maintaining parallel development environments.
+
+WHY?
+
+Just because I want to keep myself sane. Why? Because:
+
+At work I usually need to checkout different projects, most of them
+stored in different version control systems, leading to a heterogeneous
+folder filled of checkouts of different VCS, keeping track of what is what
+is usually is hard. Besides that I need to keep parallel versions installed 
+of the same application or library, keeping everything syncronized and clean 
+is a mess. You are spending too much time trying to see what repository you 
+are using and the current parallel environment running, you spend time 
+focusing on something that is not really that important.
+
+SCRIPTS
+
+Shell scripts in bin/:
+- __pswitch: must be defined as a function in bashrc
+
+Ruby scripts in ./:
+- pdetect : detects what repository is using current path
+- pcreate : creates a new parallel environment
+- plist : lists parallel environments
+- premove : removes parallel environment
+
+INSTALL (this needs change)
+
+export PATH="/path/pulque/:"$PATH
+function pswitch {
+  source /path/pulque/bin/__pswitch $1
+}
+
+SUPPORTED REPOSITORIES
+
+- Git
+- Subversion
+- Mercurial
+- Bazaar
+
+COLOPHON
+
+Wikipedia: http://en.wikipedia.org/wiki/Pulque
+"Pulque, or octli, is a milk-colored, somewhat viscous alcoholic beverage made
+ from the fermented sap of the maguey plant, and is a traditional native beverage 
+ of Mexico."

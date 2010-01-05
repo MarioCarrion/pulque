@@ -1,0 +1,172 @@
+# Copyright (c) 2009-2010 Mario Carrion <mario@carrion.mx>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+# Default custom PS1
+P_CUSTOMPS1="\w-> "
+
+# Helper environment variables
+if test "x$P_CURRENT_FILE" = "x"; then
+  P_CURRENT_FILE=`readlink -f $0`
+  P_CURRENT_PATH=`dirname $P_CURRENT_FILE`
+fi
+
+# Helper functions
+function prestore {
+  if test "x$P_EXPORTED" = "x1"; then 
+    unset P_NOTDETECTED
+    export PS1=$P_PS1
+echo "setting default"
+    export DYLD_LIBRARY_PATH=$P_DYLD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=$P_LD_LIBRARY_PATH
+    export C_INCLUDE_PATH=$P_C_INCLUDE_PATH
+    export ACLOCAL_PATH=$P_ACLOCAL_PATH
+    export PKG_CONFIG_PATH=$P_PKG_CONFIG_PATH
+    export MANPATH=$P_MANPATH
+    export GTK_MODULE_DIR=$P_GTK_MODULE_DIR
+    export libexecdir=$P_libexecdir
+    export pythondir=$P_pythondir
+    export PYTHONPATH=$P_PYTHONPATH
+    export PATH=$P_PATH
+  fi
+}
+function pdestroy {
+  if test "x$P_EXPORTED" = "x1"; then 
+    prestore 
+    unset P_DYLD_LIBRARY_PATH
+    unset P_LD_LIBRARY_PATH
+    unset P_C_INCLUDE_PATH
+    unset P_ACLOCAL_PATH
+    unset P_PKG_CONFIG_PATH
+    unset P_MANPATH
+    unset P_GTK_MODULE_DIR
+    unset P_libexecdir
+    unset P_pythondir
+    unset P_PYTHONPATH
+    unset P_PATH
+    unset P_EXPORTED
+    unset P_NOTDETECTED
+    unset PROMPT_COMMAND
+  fi
+}
+function premove {
+  # We reset to default PS1 when 
+  if test "x$1" = "x"; then
+    return
+  else
+    if test "x$P_ENV" = "x$1" ; then
+      output=`__premove -n $1`
+      if test "x$output" == "xremoved: yes"; then
+        pdestroy
+      else
+	return
+      fi
+    else
+      __premove -n $1
+    fi
+  fi
+}
+
+# No environment provided
+if test "x$1" = "x"; then
+  P_PROPOSED="default"
+else
+  P_PROPOSED=$1
+fi
+
+if test "x$P_ENV" = "x$P_PROPOSED"; then
+  return
+else
+  P_ENV=$P_PROPOSED
+  unset P_PROPOSED
+fi
+
+if test "x$P_EXPORTED" = "x1"; then
+  prestore
+fi
+
+export P_PS1=$PS1
+
+# Flag to revert to P_VARIABLES when sexport is called again
+export P_EXPORTED="1" 
+
+# We save old variables to revert them when changing environments
+export P_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
+export P_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export P_C_INCLUDE_PATH=$C_INCLUDE_PATH
+export P_ACLOCAL_PATH=$ACLOCAL_PATH
+export P_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
+export P_MANPATH=$MANPATH
+export P_GTK_MODULE_DIR=$GTK_MODULE_DIR
+export P_libexecdir=$libexecdir
+export P_pythondir=$pythondir
+export P_PYTHONPATH=$PYTHONPATH
+#export P_GTK_MODULES=gail:atk-bridge # TODO: Use this?
+export P_PATH=$PATH
+
+# Function called before executing any command to update PS1
+function p_prompt_command {
+  # Was not detected and we are still using that folder?
+  if test "x$P_NOTDETECTED" = "x1" && test "x$P_REPOPATH" = "x$PWD" ; then
+    return
+  # Are we under the same detected repository? 
+  elif test "x$P_NOTDETECTED" = "x0" && test "x$P_REPOPATH" != "x" ; then
+    length=${#P_REPOPATH}
+    if test "x${PWD:0:$length}" = "x$P_REPOPATH"; then
+      return
+    fi
+  fi
+
+  arr=()
+  index=0
+  IFS=$'\n'
+  for item in `pdetect -p $PWD` ; do 
+    if test "x${item}" = "xabort:" ; then
+      break
+    fi 
+    arr[${index}]=${item}
+    let "index=$index + 1"
+  done
+  
+  if [ $index -gt 3 ] ; then
+    export P_NOTDETECTED=0
+    export P_REPOPATH=${arr[3]}
+    
+    # If repository supports local branching we show it
+    if [ $index -eq 5 ] ; then
+      export PS1="@$P_ENV:${arr[1]} (${arr[4]}) $P_CUSTOMPS1"
+    else
+      export PS1="@$P_ENV:${arr[1]} $P_CUSTOMPS1"
+    fi
+  else
+    export P_REPOPATH=$PWD
+    export P_NOTDETECTED=1
+    export PS1="@$P_ENV $P_CUSTOMPS1"
+  fi
+}
+output=`pexists $P_ENV`
+if test "x$output" == "xexists: no"; then
+  output=`pcreate $P_ENV`
+  if test "x$output" == "xcreated: no"; then
+    echo "-> Creating failed. Not switching"
+    return
+  fi 
+fi
+PROMPT_COMMAND="p_prompt_command"
+

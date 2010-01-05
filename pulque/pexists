@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+# Copyright (c) 2010 Mario Carrion <mario@carrion.mx>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+require 'optparse'
+require File.join(File.expand_path(File.dirname(__FILE__)), "utils", "environment.rb")
+
+options = {}
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT -n NAME"
+
+  options[:root] = nil
+  opts.on( '-r', '--root ROOT', 'Sets root environment.') do |root|
+    options[:root] = root
+  end
+
+  options[:name] = nil
+  opts.on( '-n', '--name NAME', 'Environment to verify existence.') do |name|
+    options[:name] = name
+  end
+
+  opts.on( '-h', '--help', 'Display this screen.') do 
+    puts opts 
+    exit
+  end
+end
+begin
+  optparse.parse!
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
+  puts "Error: #{e}\nUse: #{File.basename(__FILE__)} -h for more information."
+  exit 0
+end
+
+if options[:name].nil?
+  if ARGV.count == 0
+    puts "abort: Name missing."
+    exit 0
+  else # We set the first argument as name
+   options[:name] = ARGV[0]
+  end
+end
+
+exists = Pulque::Environment.exists?(options[:name],options[:root])
+puts "exists: #{exists == true ? "yes" : "no"}"
