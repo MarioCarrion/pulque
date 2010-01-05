@@ -31,7 +31,7 @@ module Pulque
       return false unless is_path_clean?
 
       output = `bzr version-info #{@path} 2>&1`
-      return false if output[0,10] == "bzr: ERROR"
+      return false if output.nil? || output[0,10] == "bzr: ERROR"
       
       @repo_path = @path
       true

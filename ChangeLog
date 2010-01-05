@@ -1,3 +1,9 @@
+2010-01-05  Mario Carrion  <mario@carrion.mx>
+
+	* pulque/repositories/mercurial.rb, 
+	  pulque/repositories/bazaar.rb: Testing nil, happens when command
+	is not installed
+
 2010-01-04  Mario Carrion  <mario@carrion.mx>
 
 	Initial import

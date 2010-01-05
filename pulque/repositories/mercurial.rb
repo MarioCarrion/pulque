@@ -32,7 +32,7 @@ module Pulque
       return false unless is_path_clean?
 
       output = `hg status #{@path} 2>&1`
-      return false if output[0,5] == "abort"
+      return false if output.nil? || output[0,5] == "abort"
       
       @repo_path = @path
       true
