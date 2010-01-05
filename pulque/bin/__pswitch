@@ -66,7 +66,7 @@ function pdestroy {
   fi
 }
 function premove {
-  # We reset to default PS1 when 
+  # We reset to default PS1 when removing same switched environment
   if test "x$1" = "x"; then
     return
   else
