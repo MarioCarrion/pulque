@@ -32,7 +32,6 @@ function prestore {
   if test "x$P_EXPORTED" = "x1"; then 
     unset P_NOTDETECTED
     export PS1=$P_PS1
-echo "setting default"
     export DYLD_LIBRARY_PATH=$P_DYLD_LIBRARY_PATH
     export LD_LIBRARY_PATH=$P_LD_LIBRARY_PATH
     export C_INCLUDE_PATH=$P_C_INCLUDE_PATH
@@ -143,6 +142,7 @@ function p_prompt_command {
     arr[${index}]=${item}
     let "index=$index + 1"
   done
+  unset IFS
   
   if [ $index -gt 3 ] ; then
     export P_NOTDETECTED=0

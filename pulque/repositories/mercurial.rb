@@ -18,6 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+require 'systemu'
+
 module Pulque
   # Detects Mercurial repositories
   class MercurialRepository < Repository 
@@ -31,8 +33,8 @@ module Pulque
     def detect?
       return false unless is_path_clean?
 
-      output = `hg status #{@path} 2>&1`
-      return false if output.nil? || output[0,5] == "abort"
+      status, stdout, sterr = systemu("hg status #{@path}")
+      return false if !status.success? || stdout[0,5] == "abort"
       
       @repo_path = @path
       true

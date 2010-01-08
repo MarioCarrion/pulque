@@ -18,6 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+require 'systemu'
+
 module Pulque
   # Detects Bazaar repositories
   class BazaarRepository < Repository 
@@ -30,8 +32,8 @@ module Pulque
     def detect?
       return false unless is_path_clean?
 
-      output = `bzr version-info #{@path} 2>&1`
-      return false if output.nil? || output[0,10] == "bzr: ERROR"
+      status, stdout, sterr = systemu("bzr version-info #{@path}")
+      return false if !status.success? || stdout[0,10] == "bzr: ERROR"
       
       @repo_path = @path
       true
