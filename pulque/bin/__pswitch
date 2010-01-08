@@ -160,6 +160,42 @@ function p_prompt_command {
     export PS1="@$P_ENV $P_CUSTOMPS1"
   fi
 }
+# configure-related functions
+function pautogen {
+  ./autogen.sh --prefix=$HOME_ROOT $*
+}
+function pconfigure {
+  ./configure --prefix=$HOME_ROOT $*
+}
+function pbootstrap {
+  if test "x$1" = "x"; then
+    echo -e "-> Use pbootstrap bootstrap-file"
+    echo -e "-> For example: pbootstrap bootstrap-2.12"
+  else
+    ./$1 --prefix=$HOME_ROOT $2 && _mynotify "pbootstrap" || _mynotify 1 "pbootstrap"
+  fi
+}
+
+# make-related functions
+function pmkuci {
+  make uninstall && make clean && autogenmono $* && make install
+}
+function pmk { 
+  make $*
+}
+function pmki { 
+  make install $* 
+}
+function pmku { 
+  make uninstall
+}
+function pmkc { 
+  make clean
+}
+function pmkdc { 
+  make dist clean
+}
+
 output=`pexists $P_ENV`
 if test "x$output" == "xexists: no"; then
   output=`pcreate $P_ENV`
@@ -167,6 +203,7 @@ if test "x$output" == "xexists: no"; then
     echo "-> Creating failed. Not switching"
     return
   fi 
+  HOME_ROOT=$HOME/.root-dev/$P_REV
 fi
 PROMPT_COMMAND="p_prompt_command"
 

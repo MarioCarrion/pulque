@@ -1,5 +1,9 @@
 2010-01-07  Mario Carrion  <mario@carrion.mx>
 
+	* pulque/bin/__pswitch: Shortcut functions added.
+
+2010-01-07  Mario Carrion  <mario@carrion.mx>
+
 	* pulque/bin/__pswitch: Removed echo, unsetting IFS.
 	* pulque/repositories/bazaar.rb, 
 	  pulque/repositories/mercurial.rb: Using systemu to fork command.
