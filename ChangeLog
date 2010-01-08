@@ -1,3 +1,9 @@
+2010-01-08  Mario Carrion <mario@carrion.mx>
+
+	* pulque/bin/__pswitch: Colors supported, notify-send used when 
+	installed.
+	* .gitignore: File added
+
 2010-01-07  Mario Carrion  <mario@carrion.mx>
 
 	* pulque/bin/__pswitch: Shortcut functions added.

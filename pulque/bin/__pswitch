@@ -21,6 +21,19 @@
 # Default custom PS1
 P_CUSTOMPS1="\w-> "
 
+# Default colors
+P_CENV='\[\e[1;37m\]'    # Environment color
+P_CBRANCH='\[\e[0;32m\]' # Branch, if any, color
+P_CREPO='\[\e[0;31m\]'   # Repository name color
+
+P_NO_COLOR='\[\e[0m\]'
+
+if which notify-send1 &> /dev/null; then
+  P_NOTIFYSEND_EXISTS=0
+else
+  P_NOTIFYSEND_EXISTS=1
+fi
+
 # Helper environment variables
 if test "x$P_CURRENT_FILE" = "x"; then
   P_CURRENT_FILE=`readlink -f $0`
@@ -150,50 +163,64 @@ function p_prompt_command {
     
     # If repository supports local branching we show it
     if [ $index -eq 5 ] ; then
-      export PS1="@$P_ENV:${arr[1]} (${arr[4]}) $P_CUSTOMPS1"
+      export PS1="$P_CENV@$P_ENV$P_NO_COLOR:$P_CREPO${arr[1]}$P_NO_COLOR ($P_CBRANCH${arr[4]}$P_NO_COLOR) $P_CUSTOMPS1"
     else
-      export PS1="@$P_ENV:${arr[1]} $P_CUSTOMPS1"
+      export PS1="$P_CENV@$P_ENV$P_NO_COLOR:$P_CREPO${arr[1]}$P_NO_COLOR $P_CUSTOMPS1"
     fi
   else
     export P_REPOPATH=$PWD
     export P_NOTDETECTED=1
-    export PS1="@$P_ENV $P_CUSTOMPS1"
+    export PS1="$P_CENV@$P_ENV$P_NO_COLOR $P_CUSTOMPS1"
   fi
 }
+
 # configure-related functions
 function pautogen {
-  ./autogen.sh --prefix=$HOME_ROOT $*
+  ./autogen.sh --prefix=$HOME_ROOT $* && __pnotifysend 0 "pautogen" || __pnotifysend 1 "pautogen"
 }
 function pconfigure {
-  ./configure --prefix=$HOME_ROOT $*
+  ./configure --prefix=$HOME_ROOT $* && __pnotifysend 0 "pconfigure" || __pnotifysend 1 "pconfigure"
 }
 function pbootstrap {
   if test "x$1" = "x"; then
     echo -e "-> Use pbootstrap bootstrap-file"
     echo -e "-> For example: pbootstrap bootstrap-2.12"
   else
-    ./$1 --prefix=$HOME_ROOT $2 && _mynotify "pbootstrap" || _mynotify 1 "pbootstrap"
+    ./$1 --prefix=$HOME_ROOT $2 && __pnotifysend 0 "pbootstrap" || __pnotifysend 1 "pbootstrap"
   fi
 }
 
 # make-related functions
 function pmkuci {
-  make uninstall && make clean && autogenmono $* && make install
+  make uninstall && make clean && autogenmono $* && make install && __pnotifysend 0 "pmkuci" || __pnotifysend 1 "pmkuci"
 }
 function pmk { 
-  make $*
+  make $* && __pnotifysend 0 "pmk" || __pnotifysend 1 "pmk"
 }
 function pmki { 
-  make install $* 
+  make install $* && __pnotifysend 0 "pmki" || __pnotifysend 1 "pmki"
 }
 function pmku { 
-  make uninstall
+  make uninstall && __pnotifysend 0 "pmku" || __pnotifysend 1 "pmku"
 }
 function pmkc { 
-  make clean
+  make clean && __pnotifysend 0 "pmkc" || __pnotifysend 1 "pmkc"
 }
 function pmkdc { 
-  make dist clean
+  make dist clean && __pnotifysend 0 "pmkdc" || __pnotifysend 1 "pmkdc"
+}
+
+function __pnotifysend {
+  if test "x$P_NOTIFYSEND_EXISTS" != "x"; then
+    urgency="normal"
+    message="finished"
+    if test "x$1" = "x1"; then
+      urgency="critical"
+      message="failed"
+    fi
+    
+    notify-send -t 3000 -u $urgency "@$P_ENV $2 $message" "Basename: `basename $PWD`"
+  fi
 }
 
 output=`pexists $P_ENV`
@@ -206,4 +233,3 @@ if test "x$output" == "xexists: no"; then
   HOME_ROOT=$HOME/.root-dev/$P_REV
 fi
 PROMPT_COMMAND="p_prompt_command"
-
