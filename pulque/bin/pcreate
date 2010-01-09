@@ -20,15 +20,20 @@
 # THE SOFTWARE.
 
 require 'optparse'
-require File.join(File.expand_path(File.dirname(__FILE__)), "repositories", "factory.rb")
+require File.join(File.expand_path(File.dirname(__FILE__)), "..", "lib", "utils", "environment.rb")
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename(__FILE__)} -p PATH"
+  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT -n NAME"
 
-  options[:path] = nil
-  opts.on( '-p', '--path PATH', 'Path to detect repository.') do |path|
-    options[:path] = path
+  options[:root] = nil
+  opts.on( '-r', '--root ROOT', 'Sets root environment.') do |root|
+    options[:root] = root
+  end
+
+  options[:name] = nil
+  opts.on( '-n', '--name NAME', 'Environment to create.') do |name|
+    options[:name] = name
   end
 
   opts.on( '-h', '--help', 'Display this screen.') do 
@@ -43,25 +48,14 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
   exit 0
 end
 
-# No path provided, using working directory.
-if options[:path].nil?
-  options[:path] = Dir.pwd
-end
-
-repository = nil
-Pulque::Factory::get_repositories(options[:path]).each do |repo|
-  if repo.detect?
-    repository = repo
-    break
+if options[:name].nil?
+  if ARGV.count == 0
+    puts "abort: Name missing."
+    exit 0
+  else # We set the first argument as name
+   options[:name] = ARGV[0]
   end
 end
 
-if repository.nil?
-  puts "abort: no repository detected."
-else
-  puts "#{repository.name}"
-  puts "#{repository.friendly_name}"
-  puts "#{repository.path}"
-  puts "#{repository.repo_path}"
-  puts "#{repository.branch}"
-end
+created = Pulque::Environment.create?(options[:name],options[:root])
+puts "created: #{created == true ? "yes" : "no"}"

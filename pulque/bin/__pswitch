@@ -83,7 +83,7 @@ function premove {
     return
   else
     if test "x$P_ENV" = "x$1" ; then
-      output=`__premove -n $1`
+      local output=`__premove -n $1`
       if test "x$output" == "xremoved: yes"; then
         pdestroy
       else
@@ -145,8 +145,8 @@ function p_prompt_command {
     fi
   fi
 
-  arr=()
-  index=0
+  local arr=()
+  local index=0
   IFS=$'\n'
   for item in `pdetect -p $PWD` ; do 
     if test "x${item}" = "xabort:" ; then
@@ -212,8 +212,8 @@ function pmkdc {
 
 function __pnotifysend {
   if test "x$P_NOTIFYSEND_EXISTS" != "x"; then
-    urgency="normal"
-    message="finished"
+    local urgency="normal"
+    local message="finished"
     if test "x$1" = "x1"; then
       urgency="critical"
       message="failed"
@@ -230,6 +230,6 @@ if test "x$output" == "xexists: no"; then
     echo "-> Creating failed. Not switching"
     return
   fi 
-  HOME_ROOT=$HOME/.root-dev/$P_REV
 fi
+HOME_ROOT=$HOME/.root-dev/$P_REV
 PROMPT_COMMAND="p_prompt_command"

@@ -1,5 +1,24 @@
 2010-01-08  Mario Carrion <mario@carrion.mx>
 
+	* pulque/bash_completion: File added, used to autocomplete pswitch 
+	  when using bash.
+	* pulque/bin/__pswitch, 
+	  pulque/plist -> pulque/bin/plist, 
+	  pulque/pcreate -> pulque/bin/pcreate, 
+	  pulque/pdetect -> pulque/bin/pdetect, 
+	  pulque/pexists -> pulque/bin/pexists, 
+	  pulque/__premove -> pulque/bin/__premove, 
+	  pulque/repositories/git.rb -> pulque/lib/repositories/git.rb, 
+	  pulque/utils/environment.rb -> pulque/lib/utils/environment.rb, 
+	  pulque/repositories/bazaar.rb -> pulque/lib/repositories/bazaar.rb, 
+	  pulque/repositories/factory.rb -> pulque/lib/repositories/factory.rb, 
+	  pulque/repositories/mercurial.rb -> pulque/lib/repositories/mercurial.rb, 
+	  pulque/repositories/repository.rb -> pulque/lib/repositories/repository.rb, 
+	  pulque/repositories/subversion.rb -> pulque/lib/repositories/subversion.rb: 
+	  Executable files moved to bin/ all other files moved to lib/
+
+2010-01-08  Mario Carrion <mario@carrion.mx>
+
 	* pulque/bin/__pswitch: Colors supported, notify-send used when 
 	installed.
 	* .gitignore: File added
