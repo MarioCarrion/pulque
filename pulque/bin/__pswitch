@@ -231,5 +231,5 @@ if test "x$output" == "xexists: no"; then
     return
   fi 
 fi
-HOME_ROOT=$HOME/.root-dev/$P_REV
+HOME_ROOT=$HOME/.root-dev/$P_ENV
 PROMPT_COMMAND="p_prompt_command"

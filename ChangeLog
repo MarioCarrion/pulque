@@ -1,5 +1,9 @@
 2010-01-12  Mario Carrion  <mario@carrion.mx>
 
+	* pulque/bin/__pswitch: Fixed environment variable.
+
+2010-01-12  Mario Carrion  <mario@carrion.mx>
+
 	* README: Updated.
 	* pulque/bin/__pswitch: Using "distclean" instead of "dist clean"
 
