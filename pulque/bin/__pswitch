@@ -176,17 +176,17 @@ function p_prompt_command {
 
 # configure-related functions
 function pautogen {
-  ./autogen.sh --prefix=$HOME_ROOT $* && __pnotifysend 0 "pautogen" || __pnotifysend 1 "pautogen"
+  ./autogen.sh --prefix=$P_HOME_ROOT $* && __pnotifysend 0 "pautogen" || __pnotifysend 1 "pautogen"
 }
 function pconfigure {
-  ./configure --prefix=$HOME_ROOT $* && __pnotifysend 0 "pconfigure" || __pnotifysend 1 "pconfigure"
+  ./configure --prefix=$P_HOME_ROOT $* && __pnotifysend 0 "pconfigure" || __pnotifysend 1 "pconfigure"
 }
 function pbootstrap {
   if test "x$1" = "x"; then
     echo -e "-> Use pbootstrap bootstrap-file"
     echo -e "-> For example: pbootstrap bootstrap-2.12"
   else
-    ./$1 --prefix=$HOME_ROOT $2 && __pnotifysend 0 "pbootstrap" || __pnotifysend 1 "pbootstrap"
+    ./$1 --prefix=$P_HOME_ROOT $2 && __pnotifysend 0 "pbootstrap" || __pnotifysend 1 "pbootstrap"
   fi
 }
 
@@ -231,5 +231,5 @@ if test "x$output" == "xexists: no"; then
     return
   fi 
 fi
-HOME_ROOT=$HOME/.root-dev/$P_ENV
+P_HOME_ROOT=$HOME/.root-dev/$P_ENV
 PROMPT_COMMAND="p_prompt_command"

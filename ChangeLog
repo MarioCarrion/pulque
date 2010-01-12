@@ -1,5 +1,9 @@
 2010-01-12  Mario Carrion  <mario@carrion.mx>
 
+	* pulque/bin/__pswitch: Using P_HOME_ROOT instead of HOME_ROOT.
+
+2010-01-12  Mario Carrion  <mario@carrion.mx>
+
 	* pulque/bin/__pswitch: Fixed environment variable.
 
 2010-01-12  Mario Carrion  <mario@carrion.mx>
