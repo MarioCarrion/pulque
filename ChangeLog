@@ -1,3 +1,8 @@
+2010-01-12  Mario Carrion  <mario@carrion.mx>
+
+	* README: Updated.
+	* pulque/bin/__pswitch: Using "distclean" instead of "dist clean"
+
 2010-01-08  Mario Carrion <mario@carrion.mx>
 
 	* pulque/bash_completion: File added, used to autocomplete pswitch 

@@ -18,16 +18,14 @@ is a mess. You are spending too much time trying to see what repository you
 are using and the current parallel environment running, you spend time 
 focusing on something that is not really that important.
 
-SCRIPTS
+BINARY
 
-Shell scripts in bin/:
 - __pswitch: must be defined as a function in bashrc
-
-Ruby scripts in ./:
-- pdetect : detects what repository is using current path
+- __premove : removes parallel environment
 - pcreate : creates a new parallel environment
+- pexists: requests existence of environment
+- pdetect : detects what repository is using current path
 - plist : lists parallel environments
-- premove : removes parallel environment
 
 INSTALL (this needs change)
 

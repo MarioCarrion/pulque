@@ -207,7 +207,7 @@ function pmkc {
   make clean && __pnotifysend 0 "pmkc" || __pnotifysend 1 "pmkc"
 }
 function pmkdc { 
-  make dist clean && __pnotifysend 0 "pmkdc" || __pnotifysend 1 "pmkdc"
+  make distclean && __pnotifysend 0 "pmkdc" || __pnotifysend 1 "pmkdc"
 }
 
 function __pnotifysend {
