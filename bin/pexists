@@ -1,5 +1,5 @@
-#!/usr/bin/env ruby
-# Copyright (c) 2009-2010 Mario Carrion <mario@carrion.mx>
+#! /usr/bin/ruby1.8
+# Copyright (c) 2010 Mario Carrion <mario@carrion.mx>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,20 @@
 # THE SOFTWARE.
 
 require 'optparse'
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "lib", "utils", "environment.rb")
+require 'pulque/utils/environment'
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT"
+  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT -n NAME"
 
   options[:root] = nil
   opts.on( '-r', '--root ROOT', 'Sets root environment.') do |root|
     options[:root] = root
+  end
+
+  options[:name] = nil
+  opts.on( '-n', '--name NAME', 'Environment to verify existence.') do |name|
+    options[:name] = name
   end
 
   opts.on( '-h', '--help', 'Display this screen.') do 
@@ -43,11 +48,14 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
   exit 0
 end
 
-environments = Pulque::Environment.list(options[:root])
-if environments.nil?
-  puts
-else
-  environments.each do |env| print "#{env}\t" end
-  puts
+if options[:name].nil?
+  if ARGV.count == 0
+    puts "abort: Name missing."
+    exit 0
+  else # We set the first argument as name
+   options[:name] = ARGV[0]
+  end
 end
 
+exists = Pulque::Environment.exists?(options[:name],options[:root])
+puts "exists: #{exists == true ? "yes" : "no"}"

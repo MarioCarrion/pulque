@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#! /usr/bin/ruby1.8
 # Copyright (c) 2009-2010 Mario Carrion <mario@carrion.mx>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,20 +20,15 @@
 # THE SOFTWARE.
 
 require 'optparse'
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "lib", "utils", "environment.rb")
+require 'pulque/repositories/factory'
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT -n NAME"
+  opts.banner = "Usage: #{File.basename(__FILE__)} -p PATH"
 
-  options[:root] = nil
-  opts.on( '-r', '--root ROOT', 'Sets root environment.') do |root|
-    options[:root] = root
-  end
-
-  options[:name] = nil
-  opts.on( '-n', '--name NAME', 'Environment to remove.') do |name|
-    options[:name] = name
+  options[:path] = nil
+  opts.on( '-p', '--path PATH', 'Path to detect repository.') do |path|
+    options[:path] = path
   end
 
   opts.on( '-h', '--help', 'Display this screen.') do 
@@ -48,14 +43,25 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
   exit 0
 end
 
-if options[:name].nil?
-  if ARGV.count == 0
-    puts "abort: Name missing."
-    exit 0
-  else # We set the first argument as name
-   options[:name] = ARGV[0]
+# No path provided, using working directory.
+if options[:path].nil?
+  options[:path] = Dir.pwd
+end
+
+repository = nil
+Pulque::Factory::get_repositories(options[:path]).each do |repo|
+  if repo.detect?
+    repository = repo
+    break
   end
 end
 
-created = Pulque::Environment.remove?(options[:name],options[:root])
-puts "removed: #{created == true ? "yes" : "no"}"
+if repository.nil?
+  puts "abort: no repository detected."
+else
+  puts "#{repository.name}"
+  puts "#{repository.friendly_name}"
+  puts "#{repository.path}"
+  puts "#{repository.repo_path}"
+  puts "#{repository.branch}"
+end

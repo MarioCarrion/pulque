@@ -1,5 +1,24 @@
 2010-01-12  Mario Carrion  <mario@carrion.mx>
 
+	* LICENSE: File added.
+	* pulque/bin/plist -> bin/plist, 
+	  pulque/bin/pcreate -> bin/pcreate, 
+	  pulque/bin/pdetect -> bin/pdetect, 
+	  pulque/bin/pexists -> bin/pexists, 
+	  pulque/bin/__premove -> bin/__premove, 
+	  pulque/bin/__pswitch -> bin/__pswitch, 
+	  pulque/bash_completion -> etc/bash_completion.d/pulque, 
+	  pulque/lib/repositories/git.rb -> lib/pulque/repositories/git.rb, 
+	  pulque/lib/utils/environment.rb -> lib/pulque/utils/environment.rb, 
+	  pulque/lib/repositories/bazaar.rb -> lib/pulque/repositories/bazaar.rb, 
+	  pulque/lib/repositories/factory.rb -> lib/pulque/repositories/factory.rb, 
+	  pulque/lib/repositories/mercurial.rb -> lib/pulque/repositories/mercurial.rb, 
+	  pulque/lib/repositories/repository.rb -> lib/pulque/repositories/repository.rb, 
+	  pulque/lib/repositories/subversion.rb -> lib/pulque/repositories/subversion.rb: 
+	  Moved to satisfy setup.rb
+
+2010-01-12  Mario Carrion  <mario@carrion.mx>
+
 	* pulque/bin/__pswitch: Using P_HOME_ROOT instead of HOME_ROOT.
 
 2010-01-12  Mario Carrion  <mario@carrion.mx>
