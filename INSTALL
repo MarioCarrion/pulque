@@ -1,0 +1,35 @@
+INSTALL
+
+Pulque depends on Ruby 1.8
+
+PACKAGES
+
+openSUSE 11.2
+
+- ruby
+- rubygem-git		// If you want git support
+- subversion-ruby	// If you want subversion support
+
+Ubuntu 9.10
+
+- ruby
+- libgit-ruby		// If you want git support
+- libsvn-ruby		// If you want subversion support
+
+To install pulque you need to install 'setup':
+
+$ sudo gem install setup
+
+then
+
+$ sudo setup.rb install
+
+After installing you will have to change your .bashrc and add a new
+function:
+
+function pswitch {
+  source /usr/bin/__pswitch $1
+}
+
+Calling "pswitch [environment-name]" will switch to that parallel environment.
+

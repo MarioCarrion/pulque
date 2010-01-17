@@ -27,13 +27,6 @@ BINARY
 - pdetect : detects what repository is using current path
 - plist : lists parallel environments
 
-INSTALL (this needs change)
-
-export PATH="/path/pulque/:"$PATH
-function pswitch {
-  source /path/pulque/bin/__pswitch $1
-}
-
 SUPPORTED REPOSITORIES
 
 - Git
