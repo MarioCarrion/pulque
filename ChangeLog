@@ -1,5 +1,9 @@
 2010-01-17  Mario Carrion  <mario@carrion.mx>
 
+	* configure.ac, autogen.sh, Makefile.am: Files added.
+
+2010-01-17  Mario Carrion  <mario@carrion.mx>
+
 	* README: INSTALL section removed.
 	* INSTALL: File added. 
 
