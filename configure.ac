@@ -5,11 +5,11 @@ AM_INIT_AUTOMAKE([foreign 1.9 tar-ustar])
 
 AC_PROG_INSTALL
 
-AC_PATH_PROG(SETUPRB, setup.rb, no)
-if test "x$SETUPRB" = "xno"; then
-        AC_MSG_ERROR([setup.rb Not found])
+AC_PATH_PROG(RUBY, ruby, no)
+if test "x$RUBY" = "xno"; then
+        AC_MSG_ERROR([ruby Not found])
 fi
-AC_SUBST(SETUPRB)
+AC_SUBST(RUBY)
 
 AC_CONFIG_FILES([
 Makefile
