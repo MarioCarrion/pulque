@@ -51,14 +51,14 @@ function prestore {
     export ACLOCAL_PATH=$P_ACLOCAL_PATH
     export PKG_CONFIG_PATH=$P_PKG_CONFIG_PATH
     export MANPATH=$P_MANPATH
-    export GTK_MODULE_DIR=$P_GTK_MODULE_DIR
-    export libexecdir=$P_libexecdir
-    export pythondir=$P_pythondir
-    export PYTHONPATH=$P_PYTHONPATH
+    #export GTK_MODULE_DIR=$P_GTK_MODULE_DIR
+    #export libexecdir=$P_libexecdir
+    #export pythondir=$P_pythondir
+    #export PYTHONPATH=$P_PYTHONPATH
     export PATH=$P_PATH
   fi
 }
-function pdestroy {
+function pquit {
   if test "x$P_EXPORTED" = "x1"; then 
     prestore 
     unset P_DYLD_LIBRARY_PATH
@@ -85,13 +85,28 @@ function premove {
     if test "x$P_ENV" = "x$1" ; then
       local output=`__premove -n $1`
       if test "x$output" == "xremoved: yes"; then
-        pdestroy
+        pquit
       else
 	return
       fi
     else
       __premove -n $1
     fi
+  fi
+}
+function __pset {
+  if test "x$P_EXPORTED" = "x1"; then 
+   export DYLD_LIBRARY_PATH=$P_HOME_ROOT/lib:$P_DYLD_LIBRARY_PATH
+   export LD_LIBRARY_PATH=$P_HOME_ROOT/lib:$P_LD_LIBRARY_PATH
+   export C_INCLUDE_PATH=$P_HOME_ROOT/include:$P_C_INCLUDE_PATH
+   export ACLOCAL_PATH=$P_HOME_ROOT/share/aclocal:$P_ACLOCAL_PATH
+   export PKG_CONFIG_PATH=$P_HOME_ROOT/lib/pkgconfig:$P_PKG_CONFIG_PATH
+   export MANPATH=$P_HOME_ROOT/share/man:$P_MANPATH
+   export GTK_MODULE_DIR=$P_GTK_MODULE_DIR
+   #export libexecdir=$P_libexecdir
+   #export pythondir=$P_pythondir
+   #export PYTHONPATH=$P_PYTHONPATH
+   export PATH=$P_HOME_ROOT/bin:$P_PATH
   fi
 }
 
@@ -126,10 +141,10 @@ export P_ACLOCAL_PATH=$ACLOCAL_PATH
 export P_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
 export P_MANPATH=$MANPATH
 export P_GTK_MODULE_DIR=$GTK_MODULE_DIR
-export P_libexecdir=$libexecdir
-export P_pythondir=$pythondir
-export P_PYTHONPATH=$PYTHONPATH
-#export P_GTK_MODULES=gail:atk-bridge # TODO: Use this?
+#export P_libexecdir=$libexecdir
+#export P_pythondir=$pythondir
+#export P_PYTHONPATH=$PYTHONPATH
+#export P_GTK_MODULES=gail:atk-bridge
 export P_PATH=$PATH
 
 # Function called before executing any command to update PS1
@@ -232,4 +247,5 @@ if test "x$output" == "xexists: no"; then
   fi 
 fi
 P_HOME_ROOT=$HOME/.root-dev/$P_ENV
+__pset
 PROMPT_COMMAND="p_prompt_command"
