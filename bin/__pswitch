@@ -21,12 +21,14 @@
 # Default custom PS1
 P_CUSTOMPS1="\w-> "
 
-# Default colors
-P_CENV='\[\e[1;37m\]'    # Environment color
-P_CBRANCH='\[\e[0;32m\]' # Branch, if any, color
-P_CREPO='\[\e[0;31m\]'   # Repository name color
+if test "x$P_NO_COLOR" = "x"; then
+  # Default colors
+  P_CENV='\[\e[1;37m\]'    # Environment color
+  P_CBRANCH='\[\e[0;32m\]' # Branch, if any, color
+  P_CREPO='\[\e[0;31m\]'   # Repository name color
 
-P_NO_COLOR='\[\e[0m\]'
+  P_NO_COLOR='\[\e[0m\]'
+fi
 
 if which notify-send1 &> /dev/null; then
   P_NOTIFYSEND_EXISTS=0
