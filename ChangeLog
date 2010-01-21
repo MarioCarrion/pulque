@@ -1,5 +1,9 @@
 2010-01-21  Mario Carrion  <mario@carrion.mx>
 
+	* Makefile.am: Removed space in --install-prefix.
+
+2010-01-21  Mario Carrion  <mario@carrion.mx>
+
 	* Makefile.am: Using --install-prefix for building.
 	* bin/__pswitch: New environment variable to disable colors.
 
