@@ -1,4 +1,4 @@
-EXTRA_DIST = LICENSE bin/* lib/* etc/* setup.rb
+EXTRA_DIST = LICENSE bin/* lib/* etc/* test/* setup.rb
 
 install:
 	$(RUBY) ./setup.rb config --install-prefix $(DESTDIR)/ 

@@ -13,6 +13,7 @@ AC_SUBST(RUBY)
 
 AC_CONFIG_FILES([
 Makefile
+test/Makefile
 ])
 
 AC_OUTPUT

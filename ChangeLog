@@ -1,5 +1,13 @@
 2010-01-21  Mario Carrion  <mario@carrion.mx>
 
+	* Makefile.am: Added test/ to EXTRA_DIST
+	* configure.ac: test/Makefile added.
+	* test/Makefile.am: File added, "make test" runs scripts.
+	* test/repositories_factory.rb: Tests repositories/factory
+	* test/repositories_repository.rb: Tests repositories/repository
+
+2010-01-21  Mario Carrion  <mario@carrion.mx>
+
 	* Makefile.am: Removed space in --install-prefix.
 
 2010-01-21  Mario Carrion  <mario@carrion.mx>
