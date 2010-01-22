@@ -1,5 +1,9 @@
 2010-01-21  Mario Carrion  <mario@carrion.mx>
 
+	* README: Spelling.
+
+2010-01-21  Mario Carrion  <mario@carrion.mx>
+
 	* Makefile.am: Added test/ to EXTRA_DIST
 	* configure.ac: test/Makefile added.
 	* test/Makefile.am: File added, "make test" runs scripts.
