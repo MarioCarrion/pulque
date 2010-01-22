@@ -9,20 +9,25 @@ openSUSE 11.2
 - ruby
 - rubygem-git		// If you want git support
 - subversion-ruby	// If you want subversion support
+- rubygem-systemu	// If you want bazaar and mercurial support
 
 Ubuntu 9.10
 
 - ruby
 - libgit-ruby		// If you want git support
 - libsvn-ruby		// If you want subversion support
+- libsystemu-ruby	// If you want bazaar and mercurial support
 
-To install pulque you need to install 'setup':
+You can install Pulque using:
 
-$ sudo gem install setup
+$ ./autogen
+$ make
+# make install
 
-then
+or, if you do not have autotools installed:
 
-$ sudo setup.rb install
+$ ./setup.rb config
+# ./setup.rb install
 
 After installing you will have to change your .bashrc and add a new
 function:
