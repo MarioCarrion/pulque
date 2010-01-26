@@ -1,0 +1,20 @@
+.TH pcreate 1  "January 26, 2010" "version 0.1" "USER COMMANDS"
+.SH NAME
+pcreate \- creates a parallel development environment
+.SH SYNOPSIS
+.B pcreate
+[\-r root] [\-n name] 
+.SH DESCRIPTION
+Creates a new parallel environment. If one argument is provided then 
+this is used as name. This command is similar to pswitch, the former 
+creates and switches to the parallel environment, pcreate only
+creates it. Is recommented to use pswitch if you want to switch to a 
+parallel environment, either new or existent.
+.SH NOTE
+By default the root used is: 
+.B $HOME/.root-dev/
+.PP
+.SH AUTHOR
+Mario Carrion <mario@carrion.mx>
+.SH SEE ALSO
+pswitch(1)

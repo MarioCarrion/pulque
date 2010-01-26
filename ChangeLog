@@ -1,5 +1,10 @@
 2010-01-26  Mario Carrion  <mario@carrion.mx>
 
+	* man/pcreate.1, man/pdetect.1, man/pexists.1, man/plist.1: Files added.
+	* man/pswitch.1: Updated.
+
+2010-01-26  Mario Carrion  <mario@carrion.mx>
+
 	* README: Updated with more information.
 	* INSTALL: Reference to USING added.
 	* Makefile.am: man folder added.

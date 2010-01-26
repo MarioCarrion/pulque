@@ -1,0 +1,47 @@
+.TH pdetect 1  "January 26, 2010" "version 0.1" "USER COMMANDS"
+.SH NAME
+pdetect \- detects repository type
+.SH SYNOPSIS
+.B pdetect
+[\-p path]
+.SH DESCRIPTION
+Detects the repository type based on the path. If one argument is provided then 
+this is used as name. 
+.PP
+.SH OUTPUT
+.TP 
+.B
+Repository name
+Git
+.TP
+.B
+Friendly name or short name
+git
+.TP
+.B
+Path provided as argument
+/home/mario/repositories/pulque/man
+.TP
+.B
+Real path
+/home/mario/Repositories/pulque/
+.TP
+.B
+Command to get local branch, if any
+$(__git_ps1 "%s")
+.PP
+Complete output when using:
+.TP
+$ pdetect /home/mario/Repositories/pulque/man/
+.PP
+.nf
+Git
+git
+/home/mario/repositories/pulque/man
+/home/mario/Repositories/pulque/
+$(__git_ps1 "%s")
+.fi
+.SH AUTHOR
+Mario Carrion <mario@carrion.mx>
+.SH SEE ALSO
+pswitch(1)
