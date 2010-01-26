@@ -1,5 +1,13 @@
 2010-01-26  Mario Carrion  <mario@carrion.mx>
 
+	* man/plist.1 -> man/man1/plist.1,
+	  man/pcreate.1 -> man/man1/pcreate.1, 
+	  man/pdetect.1 -> man/man1/pdetect.1, 
+	  man/pexists.1 -> man/man1/pexists.1, 
+	  man/pswitch.1 -> man/man1/pswitch.1: Files renamed.
+
+2010-01-26  Mario Carrion  <mario@carrion.mx>
+
 	* man/pcreate.1, man/pdetect.1, man/pexists.1, man/plist.1: Files added.
 	* man/pswitch.1: Updated.
 
