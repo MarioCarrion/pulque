@@ -1,7 +1,7 @@
-EXTRA_DIST = LICENSE bin/* lib/* etc/* test/* setup.rb
+EXTRA_DIST = LICENSE bin/* lib/* etc/* test/* man/* setup.rb
 
 install:
-	$(RUBY) ./setup.rb config --install-prefix $(DESTDIR)/ 
+	$(RUBY) ./setup.rb config --install-prefix $(DESTDIR)/
 	$(RUBY) ./setup.rb install
 
 uninstall:

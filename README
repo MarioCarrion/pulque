@@ -2,30 +2,34 @@ README
 
 WHAT IS PULQUE?
 
-Pulque is a collection of classes and scripts written in Ruby and Shell 
-scripting for maintaining parallel development environments.
+Pulque is a collection of applications written in Ruby and Bash scripting to 
+maintain parallel development environments. 
 
 WHY?
 
-Just because I want to keep myself sane. Why? Because:
+Three reasons:
+- I need to keep multiple versions installed of the same software,
+- I need to know what Version Control System is used by the software, and the 
+  most important
+- I want to keep myself sane.
 
-At work I usually need to checkout different projects, most of them
-stored in different version control systems, leading to a heterogeneous
-folder filled of checkouts of different VCS, keeping track of what is what
-is usually is hard. Besides that I need to keep parallel versions installed 
-of the same application or library, keeping everything syncronized and clean 
-is a mess. You are spending too much time trying to see what repository you 
-are using and the current parallel environment running, you spend time 
-focusing on something that is not really that important.
+At work, I have to interact with different open source projects, most of them
+use Subversion and Git, but some others use Bazaar and Mercurial. Keeping track
+of the current parallel development environment and the VCS used by the software
+can be exhausting.
 
-BINARY
+You spend time focusing on something that shouldn't be that important: 
+- Managing your parallel environments and,
+- Keeping track of the VCS used by the software
 
-- __pswitch: must be defined as a function in bashrc
-- __premove : removes parallel environment
-- pcreate : creates a new parallel environment
-- pexists: requests existence of environment
-- pdetect : detects what repository is using current path
-- plist : lists parallel environments
+Is easy to get confused when interacting with the repository, for example,
+calling "svn update" when the software uses "git". *That* usually happens. 
+Unless you are using an IDE that support Multiple Parallel Development 
+Environments you will need the terminal to configure and build your projects.
+
+Pulque shows you the "parallel environment name" and the "VCS type", in your 
+bash prompt, and depending on the working directory it will update the 
+information.
 
 SUPPORTED REPOSITORIES
 
@@ -38,5 +42,5 @@ COLOPHON
 
 Wikipedia: http://en.wikipedia.org/wiki/Pulque
 "Pulque, or octli, is a milk-colored, somewhat viscous alcoholic beverage made
- from the fermented sap of the maguey plant, and is a traditional native beverage 
- of Mexico."
+ from the fermented sap of the maguey plant, and is a traditional native 
+ beverage of Mexico."

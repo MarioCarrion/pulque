@@ -77,6 +77,7 @@ function pquit {
     unset P_EXPORTED
     unset P_NOTDETECTED
     unset PROMPT_COMMAND
+    unset P_ENV
   fi
 }
 function premove {
@@ -222,6 +223,9 @@ function pmku {
 }
 function pmkc { 
   make clean && __pnotifysend 0 "pmkc" || __pnotifysend 1 "pmkc"
+}
+function pmkd { 
+  make dist && __pnotifysend 0 "pmkd" || __pnotifysend 1 "pmkd"
 }
 function pmkdc { 
   make distclean && __pnotifysend 0 "pmkdc" || __pnotifysend 1 "pmkdc"

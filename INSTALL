@@ -37,4 +37,5 @@ function pswitch {
 }
 
 Calling "pswitch [environment-name]" will switch to that parallel environment.
+Read USING for more information.
 

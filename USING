@@ -1,0 +1,40 @@
+USING
+
+Using pulque is easy. Usually you will:
+
+1. Switch/create your parallel environment:
+	- Using pswitch or pcreate. pswitch automatically invokes pcreate when
+	  the environment doesn't exist.
+2. Configure your project.
+	- Using pautogen or pconfigure.
+3. Build and install your project.
+	- Using pmk and pmki
+
+COMMANDS
+
+- pswitch	Changes to parallel environment.
+- pcreate	Creates a new parallel environment.
+- pexists	Requests existence of environment.
+- pdetect	Detects what repository is using current path.
+- plist		Lists parallel environments.
+- pquit	*	Resets variables to default values.
+- premove *	Removes a parallel environment.
+
+The following commands are aliases to commands used to build and configure 
+projects using autotools. All of them display an alert when the command fails
+or success and allow you to use arguments, for example: 
+
+pautogen --disable-something
+
+- pautogen *	Short for 'autogen.sh'. Uses the parallel environment's prefix.
+- pconfigure *	Same as pautogen, but calling 'configure'.
+- pmk *		Short for 'make'.
+- pmki *	Short for 'make install'.
+- pmku *	Short for 'make uninstall'.
+- pmkc *	Short for 'make clean'.
+- pmkdc	*	Short for 'make distclean'.
+- pmkd *	Short for 'make dist'.
+
+* These commands don't exist until you switch to any parallel environment for 
+  the first time.
+

@@ -1,0 +1,27 @@
+.TH pswitch 1  "January 26, 2010" "version 0.1" "USER COMMANDS"
+.SH NAME
+pswitch \- switch to parallel development environment
+.SH SYNOPSIS
+.B pswitch
+parallel-environment-name
+.SH DESCRIPTION
+This command helps you change from one parallel development environment
+to another. This command is similar to pcreate, the difference is 
+the former only creates the parallel environment doesn't switch to it, 
+pswitch creates and switchs to it. It is recommended to always use 
+this command instead of pcreate. 
+.PP
+If you want to revert to your old values call pquit.
+.SH NOTE
+.B Do not 
+forget to define this function in your .bashrc file:
+.PP
+.nf
+function pswitch {
+  source /usr/bin/__pswitch $1
+}
+.fi
+.SH AUTHOR
+Mario Carrion <mario@carrion.mx>
+.SH SEE ALSO
+pquit(1) pdestroy(1)

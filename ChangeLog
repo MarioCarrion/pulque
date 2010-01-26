@@ -1,3 +1,12 @@
+2010-01-26  Mario Carrion  <mario@carrion.mx>
+
+	* README: Updated with more information.
+	* INSTALL: Reference to USING added.
+	* Makefile.am: man folder added.
+	* bin/__pswitch: Unsetting P_ENV when quiting. New function added: pmkd.
+	* man/pswitch.1: File added.
+	* USING: File added.
+
 2010-01-22  Mario Carrion  <mario@carrion.mx>
 
 	* INSTALL: Instructions updated.
