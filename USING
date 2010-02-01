@@ -22,7 +22,7 @@ COMMANDS
 
 The following commands are aliases to commands used to build and configure 
 projects using autotools. All of them display an alert when the command fails
-or success and allow you to use arguments, for example: 
+or successes and allows you to use arguments, for example: 
 
 pautogen --disable-something
 
