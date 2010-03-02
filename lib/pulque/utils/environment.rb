@@ -27,7 +27,7 @@ module Pulque
 
     def Environment.create?(name,path=nil)
       path = File.join(Environment::format_path(path), name)
-      return false if File.exists?(path) 
+      return false if File.exists?(path)
 
       begin
         FileUtils.mkdir_p(path)
@@ -40,7 +40,7 @@ module Pulque
 
     def Environment.exists?(name,path=nil)
       path = File.join(Environment::format_path(path), name)
-      File.exists?(path) 
+      File.exists?(path)
     end
 
     def Environment.format_path(path=nil)
@@ -56,13 +56,13 @@ module Pulque
     def Environment.list(path=nil)
       result = []
       path = Environment::format_path(path)
- 
+
       if File.exists?(path)
-        Dir.foreach(path) do |filename| 
-	  if filename != "." && filename != ".." &&
-	     File.directory?("#{path}#{filename}")
-	    result << filename
-	  end
+        Dir.foreach(path) do |filename|
+          if filename != "." && filename != ".." &&
+             File.directory?("#{path}#{filename}")
+            result << filename
+          end
         end
       end
 
@@ -75,7 +75,7 @@ module Pulque
 
       begin
         FileUtils.rm_rf(path)
-      rescue SystemCallError 
+      rescue SystemCallError
         return false
       end
 

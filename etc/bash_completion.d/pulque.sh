@@ -28,4 +28,5 @@ ___pswitch()
 }
 
 complete -F ___pswitch pswitch
+complete -F ___pswitch premove
 

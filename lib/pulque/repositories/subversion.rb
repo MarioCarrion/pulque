@@ -23,7 +23,7 @@ require 'svn/client'
 module Pulque
   # Detects Subversion repositories
   class SubversionRepository < Repository
-    
+
     def initialize(path)
       super(path)
       @name = "Subversion"

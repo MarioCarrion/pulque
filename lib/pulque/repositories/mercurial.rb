@@ -35,7 +35,7 @@ module Pulque
 
       status, stdout, sterr = systemu("hg status #{@path}")
       return false if !status.success? || stdout[0,5] == "abort"
-      
+
       @repo_path = @path
       true
     end

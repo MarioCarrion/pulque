@@ -25,7 +25,7 @@ require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories"
 
 module Pulque
   # Detects Git repositories
-  class GitRepository < Repository 
+  class GitRepository < Repository
     def initialize(path)
       super(path)
       @name = "Git"
@@ -49,11 +49,11 @@ module Pulque
         git = Git.open(path)
       rescue ArgumentError => e
         split = path.split("/")
-	split.delete_at(split.length - 1)
-	result = ""
-	split.each do |item| 
-	  result = "#{result}#{item}/" 
-	end
+        split.delete_at(split.length - 1)
+        result = ""
+        split.each do |item|
+          result = "#{result}#{item}/"
+        end
         return detect_recursive?(result)
       end
 

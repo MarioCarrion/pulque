@@ -44,7 +44,7 @@ fi
 
 # Helper functions
 function prestore {
-  if test "x$P_EXPORTED" = "x1"; then 
+  if test "x$P_EXPORTED" = "x1"; then
     unset P_NOTDETECTED
     export PS1=$P_PS1
     export DYLD_LIBRARY_PATH=$P_DYLD_LIBRARY_PATH
@@ -61,8 +61,8 @@ function prestore {
   fi
 }
 function pquit {
-  if test "x$P_EXPORTED" = "x1"; then 
-    prestore 
+  if test "x$P_EXPORTED" = "x1"; then
+    prestore
     unset P_DYLD_LIBRARY_PATH
     unset P_LD_LIBRARY_PATH
     unset P_C_INCLUDE_PATH
@@ -90,7 +90,7 @@ function premove {
       if test "x$output" == "xremoved: yes"; then
         pquit
       else
-	return
+        return
       fi
     else
       __premove -n $1
@@ -98,7 +98,7 @@ function premove {
   fi
 }
 function __pset {
-  if test "x$P_EXPORTED" = "x1"; then 
+  if test "x$P_EXPORTED" = "x1"; then
    export DYLD_LIBRARY_PATH=$P_HOME_ROOT/lib:$P_DYLD_LIBRARY_PATH
    export LD_LIBRARY_PATH=$P_HOME_ROOT/lib:$P_LD_LIBRARY_PATH
    export C_INCLUDE_PATH=$P_HOME_ROOT/include:$P_C_INCLUDE_PATH
@@ -134,7 +134,7 @@ fi
 export P_PS1=$PS1
 
 # Flag to revert to P_VARIABLES when sexport is called again
-export P_EXPORTED="1" 
+export P_EXPORTED="1"
 
 # We save old variables to revert them when changing environments
 export P_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
@@ -155,7 +155,7 @@ function p_prompt_command {
   # Was not detected and we are still using that folder?
   if test "x$P_NOTDETECTED" = "x1" && test "x$P_REPOPATH" = "x$PWD" ; then
     return
-  # Are we under the same detected repository? 
+  # Are we under the same detected repository?
   elif test "x$P_NOTDETECTED" = "x0" && test "x$P_REPOPATH" != "x" ; then
     length=${#P_REPOPATH}
     if test "x${PWD:0:$length}" = "x$P_REPOPATH"; then
@@ -166,19 +166,19 @@ function p_prompt_command {
   local arr=()
   local index=0
   IFS=$'\n'
-  for item in `pdetect -p $PWD` ; do 
+  for item in `pdetect -p $PWD` ; do
     if test "x${item}" = "xabort:" ; then
       break
-    fi 
+    fi
     arr[${index}]=${item}
     let "index=$index + 1"
   done
   unset IFS
-  
+
   if [ $index -gt 3 ] ; then
     export P_NOTDETECTED=0
     export P_REPOPATH=${arr[3]}
-    
+
     # If repository supports local branching we show it
     if [ $index -eq 5 ] ; then
       export PS1="$P_CENV@$P_ENV$P_NO_COLOR:$P_CREPO${arr[1]}$P_NO_COLOR ($P_CBRANCH${arr[4]}$P_NO_COLOR) $P_CUSTOMPS1"
@@ -212,22 +212,22 @@ function pbootstrap {
 function pmkuci {
   make uninstall && make clean && autogenmono $* && make install && __pnotifysend 0 "pmkuci" || __pnotifysend 1 "pmkuci"
 }
-function pmk { 
+function pmk {
   make $* && __pnotifysend 0 "pmk" || __pnotifysend 1 "pmk"
 }
-function pmki { 
+function pmki {
   make install $* && __pnotifysend 0 "pmki" || __pnotifysend 1 "pmki"
 }
-function pmku { 
+function pmku {
   make uninstall && __pnotifysend 0 "pmku" || __pnotifysend 1 "pmku"
 }
-function pmkc { 
+function pmkc {
   make clean && __pnotifysend 0 "pmkc" || __pnotifysend 1 "pmkc"
 }
-function pmkd { 
+function pmkd {
   make dist && __pnotifysend 0 "pmkd" || __pnotifysend 1 "pmkd"
 }
-function pmkdc { 
+function pmkdc {
   make distclean && __pnotifysend 0 "pmkdc" || __pnotifysend 1 "pmkdc"
 }
 
@@ -239,7 +239,7 @@ function __pnotifysend {
       urgency="critical"
       message="failed"
     fi
-    
+
     notify-send -t 3000 -u $urgency "@$P_ENV $2 $message" "Basename: `basename $PWD`"
   fi
 }
@@ -250,7 +250,7 @@ if test "x$output" == "xexists: no"; then
   if test "x$output" == "xcreated: no"; then
     echo "-> Creating failed. Not switching"
     return
-  fi 
+  fi
 fi
 P_HOME_ROOT=$HOME/.root-dev/$P_ENV
 __pset

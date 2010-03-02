@@ -23,17 +23,17 @@ require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories"
 # Hack to call 'require' using absolute path
 # and catch LoadError exceptions
 def require_loaderror(&block)
-  begin 
+  begin
     require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", block.call)
   rescue LoadError
   end
 end
 
 module Pulque
-  
+
   class Factory
     @@repositories = {}
-    
+
     def Factory.get_repositories(path)
       result = []
       @@repositories.values.each do |repository|

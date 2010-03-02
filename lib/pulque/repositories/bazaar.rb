@@ -22,7 +22,7 @@ require 'systemu'
 
 module Pulque
   # Detects Bazaar repositories
-  class BazaarRepository < Repository 
+  class BazaarRepository < Repository
     def initialize(path)
       super(path)
       @name = "Bazaar"
@@ -34,7 +34,7 @@ module Pulque
 
       status, stdout, sterr = systemu("bzr version-info #{@path}")
       return false if !status.success? || stdout[0,10] == "bzr: ERROR"
-      
+
       @repo_path = @path
       true
     end

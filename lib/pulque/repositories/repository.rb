@@ -50,13 +50,13 @@ module Pulque
       if !File.directory?(@path)
         dirname = File.dirname(@path)
         return false unless File.exists?(dirname)
-	return false unless File.directory?(dirname)
-	
-	@path = dirname
+        return false unless File.directory?(dirname)
+
+        @path = dirname
       end
-      
+
       true
     end
   end
- 
+
 end
