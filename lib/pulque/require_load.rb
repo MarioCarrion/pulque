@@ -1,4 +1,4 @@
-# Copyright (c) 2009 Mario Carrion <mario@carrion.mx>
+# Copyright (c) 2010 Mario Carrion <mario@carrion.mx>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -18,31 +18,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "require_load")
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "repository")
-
-module Pulque
-
-  class Factory
-    @@repositories = {}
-
-    def Factory.get_repositories(path)
-      result = []
-      @@repositories.values.each do |repository|
-        result << repository.new(path)
-      end
-      result
-    end
-
-    def Factory.register(repository)
-      @@repositories[repository.name] = repository
-    end
+# Hack to call 'require' using absolute path and catch LoadError exceptions
+# is meant to be used by Factory classes.
+#
+# Example:
+#     require_loaderror("repositories", "git.rb")
+def require_loaderror(path, file)
+  begin
+    require File.join(File.expand_path(File.dirname(__FILE__)), "..", "pulque", path, file)
+  rescue LoadError
   end
-
 end
 
-# Loading known repositories
-require_loaderror("repositories", "git.rb")
-require_loaderror("repositories", "subversion.rb")
-require_loaderror("repositories", "mercurial.rb")
-require_loaderror("repositories", "bazaar.rb" )

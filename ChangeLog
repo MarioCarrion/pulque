@@ -1,5 +1,15 @@
 2010-03-02  Mario Carrion  <mario@carrion.mx>
 
+	* bin/pcl,
+	  lib/pulque/changelogs/changelog.rb,
+	  lib/pulque/changelogs/factory.rb,
+	  lib/pulque/changelogs/git.rb:
+	ChangeLog files added.
+	* lib/pulque/require_load.rb: Require hack moved to file.
+	* lib/pulque/repositories/factory.rb: Using require_load.
+
+2010-03-02  Mario Carrion  <mario@carrion.mx>
+
 	* bin/plist:
 	* bin/pcreate:
 	* bin/pdetect:

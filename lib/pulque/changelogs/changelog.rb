@@ -1,4 +1,4 @@
-# Copyright (c) 2009 Mario Carrion <mario@carrion.mx>
+# Copyright (c) 2010 Mario Carrion <mario@carrion.mx>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -18,31 +18,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "require_load")
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "repository")
-
 module Pulque
+  module ChangeLogs
 
-  class Factory
-    @@repositories = {}
+    class ChangeLog
+      attr_accessor :path, :repo_path, :name
 
-    def Factory.get_repositories(path)
-      result = []
-      @@repositories.values.each do |repository|
-        result << repository.new(path)
+      def initialize(path)
+        @path = path
+        @repo_path = nil
+        @name = nil
       end
-      result
+
+      def print
+        puts "No ChangeLog implementation found."
+      end
     end
 
-    def Factory.register(repository)
-      @@repositories[repository.name] = repository
-    end
   end
-
 end
-
-# Loading known repositories
-require_loaderror("repositories", "git.rb")
-require_loaderror("repositories", "subversion.rb")
-require_loaderror("repositories", "mercurial.rb")
-require_loaderror("repositories", "bazaar.rb" )

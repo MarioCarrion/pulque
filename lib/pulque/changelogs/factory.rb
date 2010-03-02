@@ -18,31 +18,47 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+#require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "repository")
+
 require File.join(File.expand_path(File.dirname(__FILE__)), "..", "require_load")
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "repository")
+require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "factory")
 
 module Pulque
+  module ChangeLogs
 
-  class Factory
-    @@repositories = {}
+    class Factory
+      @@changelogs = {}
 
-    def Factory.get_repositories(path)
-      result = []
-      @@repositories.values.each do |repository|
-        result << repository.new(path)
+      def Factory.get(path)
+        repository = nil
+        Pulque::Factory::get_repositories(path).each do |repo|
+          if repo.detect?
+            repository = repo
+            break
+          end
+        end
+        return ChangeLog.new(path) if repository.nil?
+
+        changelog = nil
+        @@changelogs.values.each do |changelog_type|
+          changelog = changelog_type.new(path)
+          if changelog.name == repository.name
+            break
+          end
+        end
+        return ChangeLog.new(path) if changelog.nil?
+
+        changelog.repo_path = repository.repo_path
+        changelog
       end
-      result
+
+      def Factory.register(changelog)
+        @@changelogs[changelog.name] = changelog
+      end
     end
 
-    def Factory.register(repository)
-      @@repositories[repository.name] = repository
-    end
   end
-
 end
 
-# Loading known repositories
-require_loaderror("repositories", "git.rb")
-require_loaderror("repositories", "subversion.rb")
-require_loaderror("repositories", "mercurial.rb")
-require_loaderror("repositories", "bazaar.rb" )
+# Loading known implementations
+require_loaderror("changelogs", "git.rb")

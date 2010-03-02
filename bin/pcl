@@ -1,4 +1,5 @@
-# Copyright (c) 2009 Mario Carrion <mario@carrion.mx>
+#!/usr/bin/env ruby
+# Copyright (c) 2009-2010 Mario Carrion <mario@carrion.mx>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -18,31 +19,42 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "require_load")
-require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "repository")
+require 'optparse'
+require 'pulque/changelogs/factory'
 
-module Pulque
+options = {}
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename(__FILE__)} -p PATH"
 
-  class Factory
-    @@repositories = {}
-
-    def Factory.get_repositories(path)
-      result = []
-      @@repositories.values.each do |repository|
-        result << repository.new(path)
-      end
-      result
-    end
-
-    def Factory.register(repository)
-      @@repositories[repository.name] = repository
-    end
+  options[:path] = nil
+  opts.on('-p NAME', '--path NAME', 'Path to examine.') do |path|
+    options[:path] = path
   end
 
+  opts.on('-h', '--help', 'Display this screen.') do
+    puts opts
+    exit
+  end
+end
+begin
+  optparse.parse!
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
+  puts "Error: #{e}\nUse: #{File.basename(__FILE__)} -h for more information."
+  exit 0
 end
 
-# Loading known repositories
-require_loaderror("repositories", "git.rb")
-require_loaderror("repositories", "subversion.rb")
-require_loaderror("repositories", "mercurial.rb")
-require_loaderror("repositories", "bazaar.rb" )
+if options[:path].nil?
+  if ARGV.count == 0
+    puts "abort: Path missing."
+    exit 0
+  else # We set the first argument as path
+   options[:path] = ARGV[0]
+  end
+end
+
+changelog = Pulque::ChangeLogs::Factory.get(options[:path])
+if changelog.nil?
+  puts "No ChangeLog implementation found"
+else
+  changelog.print
+end
