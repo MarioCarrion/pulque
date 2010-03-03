@@ -69,9 +69,10 @@ module Pulque
       def format_array(main_array, array, section_message)
         # Excluding files that are not in the same level
         files = []
+
         array.each do |file|
           if "#{file.path[0,@pwd_relative.length]}" == @pwd_relative
-            files << file.path[@pwd_relative.length, file.path.length-@pwd_relative.length]
+            files << remove_slash!(file.path[@pwd_relative.length, file.path.length-@pwd_relative.length])
           end
         end
 
@@ -82,6 +83,14 @@ module Pulque
             main_array << "\t* #{file}:"
           end
         end
+      end
+
+      def remove_slash!(file)
+        if file[0,1] == "/"
+puts "fil is #{file}"
+          file = file [1,file.length-1]
+        end
+        file
       end
     end
 
