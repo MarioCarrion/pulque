@@ -1,3 +1,7 @@
+2010-03-03  Mario Carrion  <mario@carrion.mx>
+
+	* bin/pcl: Using working directory when no arguments are used.
+
 2010-03-02  Mario Carrion  <mario@carrion.mx>
 
 	* bin/pcl,

@@ -45,8 +45,7 @@ end
 
 if options[:path].nil?
   if ARGV.count == 0
-    puts "abort: Path missing."
-    exit 0
+    options[:path] = Dir.pwd
   else # We set the first argument as path
    options[:path] = ARGV[0]
   end
