@@ -87,7 +87,6 @@ module Pulque
 
       def remove_slash!(file)
         if file[0,1] == "/"
-puts "fil is #{file}"
           file = file [1,file.length-1]
         end
         file

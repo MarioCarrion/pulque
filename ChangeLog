@@ -1,3 +1,7 @@
+2010-03-04  Mario Carrion  <mario@carrion.mx>
+
+	* lib/pulque/changelogs/git.rb: Removed primitive debugging.
+
 2010-03-03  Mario Carrion  <mario@carrion.mx>
 
 	* lib/pulque/changelogs/git.rb: Removing /
