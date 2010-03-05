@@ -1,3 +1,7 @@
+2010-03-05  Mario Carrion  <mario@carrion.mx>
+
+	* bin/__pswitch: Using `pwd -P` instead of $PWD.
+
 2010-03-04  Mario Carrion  <mario@carrion.mx>
 
 	* lib/pulque/changelogs/git.rb: Removed primitive debugging.

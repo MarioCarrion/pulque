@@ -152,13 +152,14 @@ export P_PATH=$PATH
 
 # Function called before executing any command to update PS1
 function p_prompt_command {
+  local fullPwd=`pwd -P`
   # Was not detected and we are still using that folder?
-  if test "x$P_NOTDETECTED" = "x1" && test "x$P_REPOPATH" = "x$PWD" ; then
+  if test "x$P_NOTDETECTED" = "x1" && test "x$P_REPOPATH" = "x$fullPwd" ; then
     return
   # Are we under the same detected repository?
   elif test "x$P_NOTDETECTED" = "x0" && test "x$P_REPOPATH" != "x" ; then
     length=${#P_REPOPATH}
-    if test "x${PWD:0:$length}" = "x$P_REPOPATH"; then
+    if test "x${fullPwd:0:$length}" = "x$P_REPOPATH"; then
       return
     fi
   fi
@@ -166,7 +167,7 @@ function p_prompt_command {
   local arr=()
   local index=0
   IFS=$'\n'
-  for item in `pdetect -p $PWD` ; do
+  for item in `pdetect -p $fullPwd` ; do
     if test "x${item}" = "xabort:" ; then
       break
     fi
@@ -186,7 +187,7 @@ function p_prompt_command {
       export PS1="$P_CENV@$P_ENV$P_NO_COLOR:$P_CREPO${arr[1]}$P_NO_COLOR $P_CUSTOMPS1"
     fi
   else
-    export P_REPOPATH=$PWD
+    export P_REPOPATH=$fullPwd
     export P_NOTDETECTED=1
     export PS1="$P_CENV@$P_ENV$P_NO_COLOR $P_CUSTOMPS1"
   fi
