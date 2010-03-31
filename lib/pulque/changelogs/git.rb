@@ -38,20 +38,17 @@ module Pulque
 
         git = Git.open(@repo_path)
 
-        untracked=[]
         added=[]
         deleted=[]
         modified=[]
 
         git.status.each do |file|
-          untracked << file if file.untracked
           added << file if file.type == 'A'
           deleted << file if file.type == 'D'
           modified << file if file.type == 'M'
         end
 
         main_array=[]
-        format_array(main_array, untracked, "# files untracked")
         format_array(main_array, added,     "# files added")
         format_array(main_array, deleted,   "# files deleted")
         format_array(main_array, modified,  "# files modified")

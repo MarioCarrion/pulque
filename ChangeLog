@@ -1,3 +1,8 @@
+2010-03-30  Mario Carrion  <mario@carrion.mx>
+
+	* lib/pulque/changelogs/git.rb: Removed untracked files, too much
+	noise.
+
 2010-03-05  Mario Carrion  <mario@carrion.mx>
 
 	* bin/__pswitch: Using `pwd -P` instead of $PWD.
