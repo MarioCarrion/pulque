@@ -26,6 +26,7 @@ module Pulque
 
       def initialize(path)
         @path = path
+        @pwd_relative = nil
         @repo_path = nil
         @name = nil
       end
@@ -41,6 +42,38 @@ module Pulque
       def get_date
           now = Date::today
           "#{now.year}-#{now.mon.to_s.rjust(2,'0')}-#{now.day.to_s.rjust(2,'0')}"
+      end
+
+      # In case some repositories require special handling
+      def format_path
+        @pwd_relative=@path if @pwd_relative.nil? 
+      end
+
+      def format_array(main_array, array, section_message)
+        format_path
+        # Excluding files that are not in the same level
+        files = []
+
+        array.each do |file|
+          if "#{file[0,@pwd_relative.length]}" == @pwd_relative
+            files << remove_slash!(file[@pwd_relative.length, file.length-@pwd_relative.length])
+          end
+        end
+
+        if files.length > 0
+          files.sort!
+          main_array << section_message
+          files.each do |file|
+            main_array << "\t* #{file}:"
+          end
+        end
+      end
+
+      def remove_slash!(file)
+        if file[0,1] == "/"
+          file = file [1,file.length-1]
+        end
+        file
       end
 
       def print

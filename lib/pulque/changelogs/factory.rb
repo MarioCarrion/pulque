@@ -62,3 +62,4 @@ end
 
 # Loading known implementations
 require_loaderror("changelogs", "git.rb")
+require_loaderror("changelogs", "subversion.rb")

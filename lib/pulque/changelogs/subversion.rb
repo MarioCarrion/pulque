@@ -18,51 +18,39 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'rubygems'
-require 'git'
+require 'svn/client'
 
 require File.join(File.expand_path(File.dirname(__FILE__)), "..", "changelogs", "changelog")
 
 module Pulque
   module ChangeLogs
 
-    class GitChangeLog < ChangeLog
+    class SubversionChangeLog < ChangeLog
       def initialize(path)
         super(path)
-        @name = "Git"
-      end
-
-      def get_author_details
-        git = Git.open(@repo_path)
-        "#{get_date}  #{git.config('user.name')}  <#{git.config('user.email')}>"
+        @name = "Subversion"
       end
 
       def get_modified_files
-        git = Git.open(@repo_path)
-
         added=[]
         deleted=[]
         modified=[]
 
-        git.status.each do |file|
-          added << file.path if file.type == 'A'
-          deleted << file.path if file.type == 'D'
-          modified << file.path if file.type == 'M'
-        end
+        context = Svn::Client::Context.new
+        context.status(@path, "HEAD", true, true) do |file, status|
+	  added << file if status.text_status == 4
+	  deleted << file if status.text_status == 6
+	  modified << file if status.text_status == 8
+	end
 
-        main_array=[]
-        format_array(main_array, added,     "# files added")
-        format_array(main_array, deleted,   "# files deleted")
-        format_array(main_array, modified,  "# files modified")
-	main_array
+        modified_files=[]
+        format_array(modified_files, added,    "# files added")
+        format_array(modified_files, deleted,  "# files deleted")
+        format_array(modified_files, modified, "# files modified")
+        modified_files
       end
-
-      def format_path
-        @pwd_relative="#{@path[@repo_path.length,@path.length-@repo_path.length]}" if @pwd_relative.nil? 
-      end
-
     end
 
-    Pulque::ChangeLogs::Factory.register(Pulque::ChangeLogs::GitChangeLog)
+    Pulque::ChangeLogs::Factory.register(Pulque::ChangeLogs::SubversionChangeLog)
   end
 end
