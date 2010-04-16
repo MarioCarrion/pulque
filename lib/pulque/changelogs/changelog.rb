@@ -30,8 +30,30 @@ module Pulque
         @name = nil
       end
 
+      def get_author_details
+         "#{get_date}  Username  <username@domain>"
+      end
+
+      def get_modified_files
+        nil
+      end
+
+      def get_date
+          now = Date::today
+          "#{now.year}-#{now.mon.to_s.rjust(2,'0')}-#{now.day.to_s.rjust(2,'0')}"
+      end
+
       def print
-        puts "No ChangeLog implementation found."
+        modified_files = get_modified_files
+	if modified_files.nil?
+	  puts "No ChangeLog implementation found."
+	elsif modified_files.length == 0
+	  puts "No changes found."
+        else
+	  puts "#{get_author_details}"
+          puts
+          modified_files.each do |file| puts file end
+        end
       end
     end
 

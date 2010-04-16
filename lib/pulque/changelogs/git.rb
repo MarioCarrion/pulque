@@ -33,9 +33,13 @@ module Pulque
         @pwd_relative = nil
       end
 
-      def print
-        @pwd_relative="#{@path[@repo_path.length,@path.length-@repo_path.length]}"
+      def get_author_details
+        git = Git.open(@repo_path)
+        "#{get_date}  #{git.config('user.name')}  <#{git.config('user.email')}>"
+      end
 
+      def get_modified_files
+        @pwd_relative="#{@path[@repo_path.length,@path.length-@repo_path.length]}"
         git = Git.open(@repo_path)
 
         added=[]
@@ -52,15 +56,7 @@ module Pulque
         format_array(main_array, added,     "# files added")
         format_array(main_array, deleted,   "# files deleted")
         format_array(main_array, modified,  "# files modified")
-
-        if main_array.length > 0
-          now = Date::today
-          puts "#{now.year}-#{now.mon.to_s.rjust(2,'0')}-#{now.day.to_s.rjust(2,'0')}  #{git.config('user.name')}  <#{git.config('user.email')}>"
-          puts
-          main_array.each do |file| puts file end
-        else
-          puts "No changes found"
-        end
+	main_array
       end
 
       def format_array(main_array, array, section_message)
