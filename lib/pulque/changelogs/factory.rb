@@ -18,8 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-#require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "repository")
-
 require File.join(File.expand_path(File.dirname(__FILE__)), "..", "require_load")
 require File.join(File.expand_path(File.dirname(__FILE__)), "..", "repositories", "factory")
 
@@ -45,6 +43,8 @@ module Pulque
           if changelog.name == repository.name
             break
           end
+	  # Reset previous variable in case they are different
+	  changelog = nil
         end
         return ChangeLog.new(path) if changelog.nil?
 

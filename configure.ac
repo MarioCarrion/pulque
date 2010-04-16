@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([pulque], [0.1])
+AC_INIT([pulque], [0.2])
 AM_INIT_AUTOMAKE([foreign 1.9 tar-ustar])
 
 AC_PROG_INSTALL
