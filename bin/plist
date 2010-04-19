@@ -24,7 +24,7 @@ require 'pulque/utils/environment'
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT"
+  opts.banner = "Usage: #{File.basename(__FILE__)} [-r ROOT]"
 
   options[:root] = nil
   opts.on( '-r', '--root ROOT', 'Sets root environment.') do |root|

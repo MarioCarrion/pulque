@@ -86,14 +86,14 @@ function premove {
     return
   else
     if test "x$P_ENV" = "x$1" ; then
-      local output=`__premove -n $1`
+      local output=`__premove $1`
       if test "x$output" == "xremoved: yes"; then
         pquit
       else
         return
       fi
     else
-      __premove -n $1
+      __premove $1
     fi
   fi
 }

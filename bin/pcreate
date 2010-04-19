@@ -24,7 +24,7 @@ require 'pulque/utils/environment'
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT -n NAME"
+  opts.banner = "Usage: #{File.basename(__FILE__)} [-r ROOT] -n NAME"
 
   options[:root] = nil
   opts.on( '-r', '--root ROOT', 'Sets root environment.') do |root|
@@ -58,4 +58,4 @@ if options[:name].nil?
 end
 
 created = Pulque::Environment.create?(options[:name],options[:root])
-puts "created: #{created == true ? "yes" : "no"}"
+puts "created: #{created ? "yes" : "no"}"

@@ -58,7 +58,7 @@ module Pulque
       end
 
       def format_path
-        @pwd_relative="#{@path[@repo_path.length,@path.length-@repo_path.length]}" if @pwd_relative.nil? 
+        @pwd_relative="#{@path[@repo_path.length,@path.length-@repo_path.length]}" if @pwd_relative.nil?
       end
 
     end

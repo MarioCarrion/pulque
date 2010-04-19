@@ -46,7 +46,7 @@ module Pulque
 
       # In case some repositories require special handling
       def format_path
-        @pwd_relative=@path if @pwd_relative.nil? 
+        @pwd_relative=@path if @pwd_relative.nil?
       end
 
       def format_array(main_array, array, section_message)

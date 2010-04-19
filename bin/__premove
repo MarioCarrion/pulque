@@ -24,7 +24,7 @@ require 'pulque/utils/environment'
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename(__FILE__)} -r ROOT -n NAME"
+  opts.banner = "Usage: premove [-r ROOT] -n NAME"
 
   options[:root] = nil
   opts.on( '-r', '--root ROOT', 'Sets root environment.') do |root|
@@ -57,5 +57,5 @@ if options[:name].nil?
   end
 end
 
-created = Pulque::Environment.remove?(options[:name],options[:root])
-puts "removed: #{created == true ? "yes" : "no"}"
+removed = Pulque::Environment.remove?(options[:name],options[:root])
+puts "removed: #{removed ? "yes" : "no"}"
