@@ -159,8 +159,16 @@ function p_prompt_command {
   # Are we under the same detected repository?
   elif test "x$P_NOTDETECTED" = "x0" && test "x$P_REPOPATH" != "x" ; then
     length=${#P_REPOPATH}
-    if test "x${fullPwd:0:$length}" = "x$P_REPOPATH"; then
+    # Is it the same path?
+    if test "x$fullPwd" = "x$P_REPOPATH"; then
       return
+    # It looks like we have the same path prefix...
+    elif test "x${fullPwd:0:$length}" = "x$P_REPOPATH"; then
+      # ...is it true? or we only have the same prefix? but is different
+      # i.e. "path/" to "path-2/"
+      if test "x${fullPwd:$length:1}" == "x/"; then
+        return
+      fi
     fi
   fi
 
