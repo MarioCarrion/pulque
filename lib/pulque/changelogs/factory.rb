@@ -43,8 +43,8 @@ module Pulque
           if changelog.name == repository.name
             break
           end
-	  # Reset previous variable in case they are different
-	  changelog = nil
+          # Reset previous variable in case they are different
+          changelog = nil
         end
         return ChangeLog.new(path) if changelog.nil?
 
@@ -63,3 +63,4 @@ end
 # Loading known implementations
 require_loaderror("changelogs", "git.rb")
 require_loaderror("changelogs", "subversion.rb")
+require_loaderror("changelogs", "mercurial.rb")

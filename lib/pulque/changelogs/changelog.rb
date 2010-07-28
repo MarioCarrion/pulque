@@ -78,12 +78,12 @@ module Pulque
 
       def print
         modified_files = get_modified_files
-	if modified_files.nil?
-	  puts "No ChangeLog implementation found."
-	elsif modified_files.length == 0
-	  puts "No changes found."
+        if modified_files.nil?
+          puts "No ChangeLog implementation found."
+        elsif modified_files.length == 0
+          puts "No changes found."
         else
-	  puts "#{get_author_details}"
+          puts "#{get_author_details}"
           puts
           modified_files.each do |file| puts file end
         end

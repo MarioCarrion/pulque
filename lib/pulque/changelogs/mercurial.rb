@@ -18,51 +18,60 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'rubygems'
-require 'git'
+require 'systemu'
 
 require File.join(File.expand_path(File.dirname(__FILE__)), "..", "changelogs", "changelog")
 
 module Pulque
   module ChangeLogs
 
-    class GitChangeLog < ChangeLog
+    class MercurialChangeLog < ChangeLog
       def initialize(path)
         super(path)
-        @name = "Git"
+        @name = "Mercurial"
       end
 
       def get_author_details
-        git = Git.open(@repo_path)
-        "#{get_date}  #{git.config('user.name')}  <#{git.config('user.email')}>"
+        username = ENV['HGUSER'] # TODO: Read ~/.hgrc and look for "username" entry
+        email = ENV['EMAIL']
+
+        if username.nil?
+          username = ""
+        end
+        if email.nil?
+          email = "#{ENV['USER']} #{ENV['HOST']}"
+        end
+
+        "#{get_date}  #{username}  <#{email}>"
       end
 
       def get_modified_files
-        git = Git.open(@repo_path)
+        status, stdout, sterr = systemu("hg status #{@repo_path}")
 
         added=[]
-        deleted=[]
+        removed=[]
         modified=[]
 
-        git.status.each do |file|
-          added << file.path if file.type == 'A'
-          deleted << file.path if file.type == 'D'
-          modified << file.path if file.type == 'M'
+        stdout.each do |file|
+          f = file.chomp
+          added << "/#{f[2,f.length - 1]}" if f[0,1] == 'A'
+          removed << "/#{f[2,f.length - 1]}" if f[0,1] == 'R'
+          modified << "/#{f[2,f.length - 1]}" if f[0,1] == 'M'
         end
 
         main_array=[]
         format_array(main_array, added,     "# files added")
-        format_array(main_array, deleted,   "# files deleted")
+        format_array(main_array, removed,   "# files removed")
         format_array(main_array, modified,  "# files modified")
         main_array
       end
 
       def format_path
-        @pwd_relative="#{@path[@repo_path.length,@path.length-@repo_path.length]}" if @pwd_relative.nil?
+        @pwd_relative="/"
       end
 
     end
 
-    Pulque::ChangeLogs::Factory.register(Pulque::ChangeLogs::GitChangeLog)
+    Pulque::ChangeLogs::Factory.register(Pulque::ChangeLogs::MercurialChangeLog)
   end
 end
